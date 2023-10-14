@@ -14,7 +14,7 @@ export class WebsocketService {
   constructor() {}
 
   connect(): void {
-    this.socket = new WebSocket(this.socketServer2);
+    this.socket = new WebSocket(this.socketServer1);
 
     this.socket.onopen = () => {
       console.log('WebSocket connection established.');
@@ -28,10 +28,12 @@ export class WebsocketService {
 
     this.socket.onclose = (event) => {
       console.log('WebSocket connection closed:', event);
+      this.messageReceived.next(`WebSocket connection closed:`);
     };
 
     this.socket.onerror = (error) => {
       console.error('WebSocket error:', error);
+      this.messageReceived.next(`WebSocket error`);
     };
   }
 
