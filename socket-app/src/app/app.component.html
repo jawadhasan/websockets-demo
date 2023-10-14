@@ -1,3 +1,21 @@
-<div>
-Messages: {{message}}
+<h2>{{title}}</h2>
+<hr />
+
+<h3>Messages {{messages.length}}</h3>
+<div class="messages">
+  <ul *ngFor="let msg of messages | reverse">
+    <li>{{msg}}</li>
+  </ul>
+
+</div>
+
+<hr />
+
+<h3>Send </h3>
+<div class="inputContainer">
+
+  <input type="text" id="txtInput" name="txtInput" [(ngModel)]="messageToSend" />
+
+  <button (click)="sendMessage()">Send</button>
+
 </div>

@@ -1,51 +1,36 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { WebsocketService } from './websocket.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy {
+
   title = 'socket-app';
-  socketServer1="ws://localhost:3000";
-  socketServer2="wss://socketsbay.com/wss/v2/1/demo/";
+  messageToSend:string;
+  messages: string[] = [];
 
-  message!:string;
-
+  constructor(private websocketService: WebsocketService) {}
 
   ngOnInit(): void {
 
+    //event wiring
+    this.websocketService.connect();
+
+    //subscribing to messages
+    this.websocketService.messageReceived.subscribe((message: string) => {
+      this.messages.push(message);
+    });
   }
 
-  ngAfterViewInit(): void {
-
-    // const ws = new WebSocket("ws://localhost:9903");
-
-    const ws = new WebSocket(this.socketServer2);
-
-    ws.onopen = this.open;
-
-    ws.onmessage = this.onmessage;
-
-    ws.onclose = function(closeEvent){
-      console.log(closeEvent);
-    }
-
-
-
-
+  sendMessage(): void {
+    console.log(this.messageToSend);
+    this.websocketService.sendMessage(this.messageToSend);
   }
 
-  open(openEvent:any){
-    console.log(openEvent)
-  }
-
-  onmessage(messageEvent:any){
-    console.log(messageEvent);
-      this.message = messageEvent.data;
-  }
-
-  close(closeEvent:any){
-   console.log(closeEvent);
+  ngOnDestroy(): void {
+    this.websocketService.messageReceived.unsubscribe();
   }
 }
