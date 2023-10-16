@@ -14,7 +14,7 @@ export class WebsocketService {
   constructor() {}
 
   connect(): void {
-    this.socket = new WebSocket(this.socketServer1);
+    this.socket = new WebSocket(this.socketServer2);
 
     this.socket.onopen = () => {
       console.log('WebSocket connection established.');
