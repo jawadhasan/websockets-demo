@@ -5,10 +5,10 @@ namespace SocketServer
         private readonly ILogger<Worker> _logger;
         private readonly HelloServer _helloServer;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, HelloServer helloServer)
         {
             _logger = logger;
-            _helloServer = new HelloServer();
+            _helloServer = helloServer;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -17,14 +17,16 @@ namespace SocketServer
 
             _helloServer.Start();
 
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Sending Message to Client at: {time}", DateTimeOffset.Now);
+            //The following code simulate server messages; for testing purposes
 
-                _helloServer.SendMessage($"server-message {DateTimeOffset.Now}"); //send message to clients
+            //while (!stoppingToken.IsCancellationRequested)
+            //{
+            //    _logger.LogInformation("Sending Message to Client at: {time}", DateTimeOffset.Now);
 
-                await Task.Delay(5000, stoppingToken);
-            }
+            //    _helloServer.SendMessage($"server-message {DateTimeOffset.Now}"); //send message to clients
+
+            //    await Task.Delay(5000, stoppingToken);
+            //}
         }
     }
 }
