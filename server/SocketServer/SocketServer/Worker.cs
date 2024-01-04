@@ -17,6 +17,7 @@ namespace SocketServer
 
             _helloServer.Start();
 
+            #region more testing code
             //The following code simulate server messages; for testing purposes
 
             //while (!stoppingToken.IsCancellationRequested)
@@ -27,6 +28,7 @@ namespace SocketServer
 
             //    await Task.Delay(5000, stoppingToken);
             //}
+            #endregion
         }
     }
 }

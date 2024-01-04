@@ -7,7 +7,6 @@ import { WebsocketService } from './websocket.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-
   title = 'socket-app';
   messageToSend:string;
   messages: string[] = [];
@@ -15,7 +14,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private websocketService: WebsocketService) {}
 
   ngOnInit(): void {
-
     //event wiring
     this.websocketService.connect();
 
@@ -24,7 +22,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.messages.push(message);
     });
   }
-
   sendMessage(): void {
     console.log(this.messageToSend);
     this.websocketService.sendMessage(this.messageToSend);

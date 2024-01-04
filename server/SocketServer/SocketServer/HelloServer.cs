@@ -5,32 +5,36 @@ namespace SocketServer
 {
     public class HelloServer
     {
+        private readonly ILogger<HelloServer> _logger;
         private readonly List<IWebSocketConnection> _sockets = new();
         private readonly WebSocketServer _server = new("ws://0.0.0.0:8181");
-
+        public HelloServer(ILogger<HelloServer> logger)
+        {
+            _logger = logger;
+        }
         public void Start()
         {
-
             _server.Start(socket =>
             {
                 socket.OnOpen = () =>
                 {
-                    Console.WriteLine("Connection open.");
+                    _logger.LogInformation("Connection open.");
                     _sockets.Add(socket);
                 };
                 socket.OnClose = () =>
                 {
-                    Console.WriteLine("Connection closed");
+                    _logger.LogWarning("Connection closed");
                     _sockets.Remove(socket);
                 };
                 socket.OnMessage = message =>
                 {
-                    Console.WriteLine("Client Says: " + message);
+                    _logger.LogInformation("Client Says: " + message);
                     _sockets.ToList().ForEach(s => s.Send(" client says: " + message));
                 };
             });
         }
 
+        //Example, if want to send .NET objects
         public void SendMessage(string message)
         {
             _sockets.ToList().ForEach(s => s.Send(message));
