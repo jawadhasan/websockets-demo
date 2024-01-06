@@ -1,8 +1,8 @@
 .messages{
   height: 400px;
-  width: 600px;
-  color: #fff ;
-  background-color: gray;
+  width: 100%;
+  color: #fcfcff ;
+  background-color: rgb(40, 85, 211);
 
   max-height: 100vh - 20px;
   overflow-y: auto;
