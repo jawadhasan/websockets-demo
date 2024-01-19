@@ -25,7 +25,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/styles/bootstrap.pulse.min.css",
+              "node_modules/ol/ol.css"
             ],
             "scripts": []
           },

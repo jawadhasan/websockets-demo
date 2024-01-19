@@ -29,7 +29,7 @@ namespace SocketServer
                 socket.OnMessage = message =>
                 {
                     _logger.LogInformation("Client Says: " + message);
-                    _sockets.ToList().ForEach(s => s.Send(" client says: " + message));
+                    _sockets.ToList().ForEach(s => s.Send(message));
                 };
             });
         }

@@ -1,21 +1,112 @@
-<h2>{{title}}</h2>
-<hr />
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border">
+  <a class="navbar-brand" href="/">
+    <h4>{{title}}</h4>
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+  </div>
+</nav>
 
-<h3>Messages {{messages.length}}</h3>
-<div class="messages">
-  <ul *ngFor="let msg of messages | reverse">
-    <li>{{msg}}</li>
-  </ul>
+
+<div class="container-fluid">
+
+  <!-- MAP -->
+  <div class="row">
+    <div class="col col-md-12">
+      <app-fleet-map></app-fleet-map>
+    </div>
+  </div>
+
+  <hr />
+
+
+
+  <div class="row">
+
+    <!-- DataTable -->
+    <div class="col col-md-6">
+
+      <h6>Messages {{messages.length}}</h6>
+      <div class="messages">
+        <table class="table table-bordered table-dark table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <td>Nr.</td>
+              <td>LicensePlate</td>
+              <td>lat</td>
+              <td>lon</td>
+              <td>Temperature</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let msg of messages;let i = index">
+              <td>{{i+1}}</td>
+              <td>{{msg.licensePlate}}</td>
+              <td>{{msg.lat}}</td>
+              <td>{{msg.lon}}</td>
+              <td>{{msg.temperature | number : '1.2-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="inputContainer">
+        <input type="text" id="txtInput" name="txtInput" [(ngModel)]="messageToSend" />
+        <button class="btn btn-warning" (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <!-- RightSide -->
+    <div class="col col-md-6">
+      <h2>Feed:</h2>
+      <div *ngIf="websocketFeed$ | async as websocketFeed">
+        {{ websocketFeed}}
+      </div>
+
+
+      <hr />
+
+    <!-- Site footer -->
+    <footer class="border bg-light">
+
+      <!-- About -->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h6>About</h6>
+          <p class="text-justify">Fleet System DEMO
+          <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by
+            <a href="https://google.com">[company-name]</a>.
+          </p>
+        </div>
+      </div>
+
+
+      <div>
+        <a class="facebook" href="https://facebook.com">Facebook &nbsp;<i class="fab fa-facebook"></i></a>
+        <a class="twitter"><i class="fab fa-twitter"></i>Twitter &nbsp;</a>
+        <a class="linkedin" href="https://www.linkedin.com/in/jawadhasanshani">LinkedIn<i
+            class="fab fa-linkedin"></i></a>
+      </div>
+
+    </footer>
+
+
+
+
+    </div>
+
+
+
+
+
+  </div>
 
 </div>
 
-<hr />
 
-<h3>Send </h3>
-<div class="inputContainer">
-
-  <input type="text" id="txtInput" name="txtInput" [(ngModel)]="messageToSend" />
-
-  <button (click)="sendMessage()">Send</button>
-
-</div>
